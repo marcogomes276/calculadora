@@ -1,120 +1,111 @@
 <template>
-	<div class="principal">
-		<div class="calculador">
-			<button class="botao" v-on:click="limpar()">C</button>
-			<button>+/-</button>
-			<button>%</button>
-
-			<button class="botao" v-on:click="setOperator('soma')">+</button>
-			<button class="botao" v-on:click="setOperator('subtracao')">-</button>
-			<button class="botao" v-on:click="setOperator('multiplicacao')">X</button>
-			<button class="botao" v-on:click="setOperator('divisao')">÷</button>
-			<button class="botao" v-on:click="resultados()">=</button>
-			<button>00</button>
-			<button>.</button>
-		</div>
-		<div class="inputs">
-			<input class="input" type="text" v-model="visor">
-		</div>
-		<div class="numeros">
-			<button class="A" v-on:click="preencher('1')">1</button>
-			<button class="A" v-on:click="preencher('2')">2</button>
-			<button class="A" v-on:click="preencher('3')">3</button>
-			<button class="A" v-on:click="preencher('4')">4</button>
-			<button class="A" v-on:click="preencher('5')">5</button>
-			<button class="A" v-on:click="preencher('6')">6</button>
-			<button class="A" v-on:click="preencher('7')">7</button>
-			<button class="A" v-on:click="preencher('8')">8</button>
-			<button class="A" v-on:click="preencher('9')">9</button>
-			<button class="A" v-on:click="preencher('0')">0</button>
-		</div>
-	</div>
+	<div id="appCalc">
+	<main class="principal">
+		<section class="inputs">
+			<p class="inputsItem resultado">{{ result }}</p>
+		</section>
+		<section class="botoes">
+			<button class="botao">C</button>
+			<button class="botao">+/-</button>
+			<button class="botao">%</button>
+			<button class="botao">÷</button>
+			<button class="botao">7</button>
+			<button class="botao">8</button>
+			<button class="botao">9</button>
+			<button class="botao">×</button>
+			<button class="botao">4</button>
+			<button class="botao">5</button>
+			<button class="botao">6</button>
+			<button class="botao">-</button>
+			<button class="botao">1</button>
+			<button class="botao">2</button>
+			<button class="botao">3</button>
+			<button class="botao">+</button>
+			<button class="botao">00</button>
+			<button class="botao">0</button>
+			<button class="botao">.</button>
+			<button class="botao btn-igual">=</button>
+		</section>
+	</main>
+</div>
 </template>
 <script>
-	export default {
-		name: 'CalculadoraDois',
+	export default{
+		name:'Calc',
 		data(){
 			return{
-				fator1: '',
-				fator2: '',
-				operador: null,
-				resultado: 0,
-				visor: null,
-				erro: ''
+			 	valor1:0,
+			 	valor2:0,
+			 	result:0
 			}
 		},
 		methods:{
-			preencher(value){
-					if (this.erro !== '') {}
-					if(this.operador===null){
-						this.fator1 = this.fator1 + value
-						this.visor = this.fator1
-
-					} else{
-						this.fator2 = this.fator2 + value
-						this.visor = this.fator2
-					}
-				},
-			setOperator(operador){
-				this.operador = operador
-			},
-			resultados(){
-				if(this.operador === 'soma') {
-					this.resultado = parseInt(this.fator1) + parseInt(this.fator2)
-					this.visor = this.resultado
-				} else if (this.operador === 'subtracao'){
-					this.resultado = parseInt(this.fator1) - parseInt(this.fator2)
-					this.visor = this.resultado
-				} else if (this.operador === 'multiplicacao') {
-					this.resultado = parseInt(this.fator1) * parseInt(this.fator2)
-					this.visor = this.resultado
-				} else{
-					if (this.fator2 === '0') {
-						this.erro = 'Não há divisão com 0, tente novamente!'
-					} else {
-						this.resultado = parseInt(this.fator1) / parseInt(this.fator2)
-						this.visor = this.resultado
-					}
+			calc(operator){
+				if (operator === 'soma') {
+					this.result = this.valor1 + this.valor2
+				}else if(operator === 'subtaçao'){
+					this.result = this.valor1 - this.valor2
+				}else if (operator === 'multiplicaçao') {
+					this.result = this.valor1 * this.valor2 
+				}else{
+					this.result = this.valor1 / this.valor2
 				}
-				this.zerar()
-			},
-			zerar(){
-				this.fator1 = ''
-				this.fator2 = ''
-				this.operador = null
-				this.erro = ''
-			},
-			limpar(){
-				this.zerar()
-				this.visor = null
-			}
+
 			}
 		}
+	}
 </script>
 <style scoped>
-	*{
-	margin: 0;
-	padding:0; 
+@import url('https://fonts.googleapis.com/css?family=Yantramanav:100,300');
+	#appCalc{
+		width: 100%;
+		height: 100vh;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-image: url("../assets/bg-calc.jpg"); 
 	}
 	.principal{
-
-	}
-	.botao{
-
+		width: 300px;
+		height: 71vh;
+		background: #2A3137;
+		color: #6FB0E2;
 	}
 	.inputs{
-
-	}
-	.input{
-
-	}
-	.numeros{
-
-	}
-	.A{
-		width: 60px;
+		height: 20vh;
+		background: #363F47;
 		padding: 10px;
+	}
+	.inputsItem{
+		color: #6FB0E2;
+	}
+	.resultado{
+		color: white;
+		font-size: 10vh;
+		text-align: center;
+	}
+	.botoes{
+		margin: 10px;
+		padding: 0;
 		display: flex;
 		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+	}
+	.botao{
+		width: 63px;
+		height: 63px;
+		background: #2A3137;
+		color: #EBECED;
+		border: none;
+		font-size: 30px;
+		font-family: 'Yantramanav', sans-serif; 
+		font-weight: 100;
+	}
+	.btn-igual{
+		background: #36b1e8;
+		color: #EBECED;
+		border-radius: 5px;
+		font-weight: 300;
 	}
 </style>
