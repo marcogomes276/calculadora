@@ -2,55 +2,86 @@
 	<div id="appCalc">
 	<main class="principal">
 		<section class="inputs">
-			<p class="inputsItem resultado">{{ result }}</p>
+			<p class="inputsItem resultado">{{ visor }}</p>
 		</section>
 		<section class="botoes">
-			<button class="botao">C</button>
+			<button class="botao" v-on:click="reset()">C</button>
 			<button class="botao">+/-</button>
 			<button class="botao">%</button>
-			<button class="botao">÷</button>
-			<button class="botao">7</button>
-			<button class="botao">8</button>
-			<button class="botao">9</button>
-			<button class="botao">×</button>
-			<button class="botao">4</button>
-			<button class="botao">5</button>
-			<button class="botao">6</button>
-			<button class="botao">-</button>
-			<button class="botao">1</button>
-			<button class="botao">2</button>
-			<button class="botao">3</button>
-			<button class="botao">+</button>
-			<button class="botao">00</button>
-			<button class="botao">0</button>
-			<button class="botao">.</button>
-			<button class="botao btn-igual">=</button>
+			<button class="botao" v-on:click="setOperator('/')" >÷</button>
+			<button class="botao" v-on:click="write('7')">7</button>
+			<button class="botao" v-on:click="write('8')">8</button>
+			<button class="botao" v-on:click="write('9')">9</button>
+			<button class="botao" v-on:click="setOperator('*')" >×</button>
+			<button class="botao" v-on:click="write('4')">4</button>
+			<button class="botao" v-on:click="write('5')">5</button>
+			<button class="botao" v-on:click="write('6')">6</button>
+			<button class="botao" v-on:click="setOperator('-')" >-</button>
+			<button class="botao" v-on:click="write('1')">1</button>
+			<button class="botao" v-on:click="write('2')">2</button>
+			<button class="botao" v-on:click="write('3')">3</button>
+			<button class="botao" v-on:click="setOperator('+')" >+</button>
+			<button class="botao" v-on:click="write('00')">00</button>
+			<button class="botao" v-on:click="write('0')">0</button>
+			<button class="botao" v-on:click="write('.')">.</button>
+			<button class="botao btn-igual" v-on:click="calc()" >=</button>
 		</section>
 	</main>
 </div>
 </template>
 <script>
 	export default{
-		name:'Calc',
+		name:'Calc2',
 		data(){
 			return{
-			 	valor1:0,
-			 	valor2:0,
-			 	result:0
+			 	valor1:'',
+			 	valor2:'',
+			 	operator:'',
+			 	result:'',
+			 	visor:0
 			}
 		},
 		methods:{
-			calc(operator){
-				if (operator === 'soma') {
-					this.result = this.valor1 + this.valor2
-				}else if(operator === 'subtaçao'){
-					this.result = this.valor1 - this.valor2
-				}else if (operator === 'multiplicaçao') {
-					this.result = this.valor1 * this.valor2 
+			write(number){
+				if (this.operator === '') {
+					this.valor1 = this.valor1 + number
+					this.visor = this.valor1
 				}else{
-					this.result = this.valor1 / this.valor2
+					this.valor2 = this.valor2 + number
+					this.visor = this.valor2
 				}
+			},
+			setOperator(value){
+				this.operator = value
+			},
+			calc(){
+				if (this.operator === '+') {
+					this.result = this.valor1 + this.valor2
+					this.clear()
 
+				}else if (this.operator === '-') {
+					this.result = this.valor1 - this.valor2
+
+				}else if (this.operator === '*') {
+					this.result = this.valor1 * this.valor2
+
+				}else{
+					if (this.valor1 == 0) {
+						alert('Não há divisão com 0, tente novamente!')
+					}else{
+						this.result = this.valor1 / this.valor2
+					}
+				}
+			},
+			clear(){
+				valor1 = '',
+				valor2 = '',
+				operator = ''
+			},
+			reset(){
+				visor = 0,
+				result = '',
+				this.clear()
 			}
 		}
 	}
@@ -67,7 +98,7 @@
 	}
 	.principal{
 		width: 300px;
-		height: 71vh;
+		min-height: 71vh;
 		background: #2A3137;
 		color: #6FB0E2;
 	}
