@@ -24,7 +24,7 @@
 			<button class="botao" v-on:click="write('00')">00</button>
 			<button class="botao" v-on:click="write('0')">0</button>
 			<button class="botao" v-on:click="write('.')">.</button>
-			<button class="botao btn-igual" v-on:click="calc()" >=</button>
+			<button class="botao btn-igual" v-on:click="calc('=')">=</button>
 		</section>
 	</main>
 </div>
@@ -56,20 +56,21 @@
 			},
 			calc(){
 				if (this.operator === '+') {
-					this.result = this.valor1 + this.valor2
+					this.result = parseFloat(this.valor1) + parseFloat(this.valor2)
+					this.visor = this.result
 					this.clear()
 
 				}else if (this.operator === '-') {
-					this.result = this.valor1 - this.valor2
+					this.result = parseFloat(this.valor1) - parseFloat(this.valor2)
 
 				}else if (this.operator === '*') {
-					this.result = this.valor1 * this.valor2
+					this.result = parseFloat(this.valor1) * parseFloat(this.valor2)
 
 				}else{
 					if (this.valor1 == 0) {
 						alert('Não há divisão com 0, tente novamente!')
 					}else{
-						this.result = this.valor1 / this.valor2
+						this.result = parseFloat(this.valor1) / parseFloat(this.valor2)
 					}
 				}
 			},
@@ -82,10 +83,11 @@
 				visor = 0,
 				result = '',
 				this.clear()
-			}
+			},
+			
 		}
 	}
-</script>
+</script>	
 <style scoped>
 @import url('https://fonts.googleapis.com/css?family=Yantramanav:100,300');
 	#appCalc{
